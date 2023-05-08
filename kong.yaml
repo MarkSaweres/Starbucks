@@ -6,7 +6,7 @@ services:
     routes:
       - name: my-node-route
         paths:
-          - /api
+          - /
     plugins:
       - name: key-auth
 

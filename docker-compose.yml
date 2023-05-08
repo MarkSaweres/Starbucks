@@ -20,7 +20,7 @@ services:
       - "8081:8081"
     environment:
       API_KEY: "testing123"
-      API_HOST: "kong:8000/api"
+      API_HOST: "kong:8000"
       REGISTER: "5012349"
     restart: always
 
@@ -76,32 +76,6 @@ services:
       DNS_ENABLED: "true"
       COOKIES_ENABLED: "false"
       LOG_LEVEL: "info"
-
-#  cashier1:
-#    image: spring-cashier
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/midterm
-#      SPRING_DATASOURCE_USERNAME: admin
-#      SPRING_DATASOURCE_PASSWORD: welcome
-#    # deploy:
-#    #   replicas: 2
-#    depends_on:
-#      - db
-#    #ports:
-#    #  - 9000:9090
-#
-#  cashier2:
-#    image: spring-cashier
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/midterm
-#      SPRING_DATASOURCE_USERNAME: admin
-#      SPRING_DATASOURCE_PASSWORD: welcome
-#    # deploy:
-#    #   replicas: 2
-#    depends_on:
-#      - db
-#    #ports:
-#    #  - 9001:9090
 
 volumes:
   db_data:

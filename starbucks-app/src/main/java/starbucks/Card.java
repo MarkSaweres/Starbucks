@@ -108,9 +108,9 @@ public class Card {
     public void pay() {
 
         Device theDevice = Device.getInstance() ;
-        String apiurl = theDevice.getProps("apiurl") ;
-        String apikey = theDevice.getProps("apikey") ;
-        String register = theDevice.getProps("register") ;
+        String apiurl = "http://localhost:8000"; // theDevice.getProps("apiurl") ;
+        String apikey = "testing123"; //theDevice.getProps("apikey") ;
+        String register = "5012349"; // theDevice.getProps("register") ;
         
         try {
 
