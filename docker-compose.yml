@@ -28,7 +28,8 @@ services:
     image: kong:2.4.0
     platform: linux/amd64
     depends_on:
-      - starbucks
+      - starbucks-api-1
+      - starbucks-api-2
     restart: always
     volumes:
       - ./kong.yaml:/kong.yaml
@@ -46,12 +47,22 @@ services:
       KONG_ADMIN_ERROR_LOG: "/dev/stderr"
       KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
 
-  starbucks:
+  starbucks-api-1:
     image: spring-starbucks-api
     depends_on:
       - mysql
-#    ports:
-      #- 8080  #should be 8081?
+    environment:
+      MYSQL_HOST: "mysql"
+      MYSQL_USER: "admin1"
+      MYSQL_PASS: "cmpe172"
+      MYSQL_SCHEMA: "starbucks"
+      SPRING_PROFILES_ACTIVE: "test"
+    restart: always
+
+  starbucks-api-2:
+    image: spring-starbucks-api
+    depends_on:
+      - mysql
     environment:
       MYSQL_HOST: "mysql"
       MYSQL_USER: "admin1"
@@ -63,7 +74,8 @@ services:
   haproxy:
     image: eeacms/haproxy
     depends_on:
-      - starbucks
+      - starbucks-api-1
+      - starbucks-api-2
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     ports:
