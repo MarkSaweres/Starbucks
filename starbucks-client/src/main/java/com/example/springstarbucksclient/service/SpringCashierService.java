@@ -3,6 +3,8 @@ package com.example.springstarbucksclient.service;
 import com.example.springstarbucksclient.model.CashierOrder;
 import com.example.springstarbucksclient.model.Command;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -17,23 +19,27 @@ public class SpringCashierService {
 //    private String secret_key  =  "kwRg54x2Go9iEdl49jFENRM12Mp711QI" ;
 //    private String register_id =  "5012349"; // default to Dub-C Store
 
-    //    @Value("${starbucks.client.apikey}")
-    String API_KEY = "2742a237475c4703841a2bf906531eb0";
+    @Value("${starbucks.client.apikey}")
+    String API_KEY;
     @Value("${starbucks.client.apihost}")
     String API_HOST;
     @Value("${starbucks.client.register}")
     String REGISTER;
 
+    HttpHeaders headers = new HttpHeaders();
+    private RestTemplate restTemplate = new RestTemplate();
+
     public String placeOrder(@Valid Command command) {
         CashierOrder cashierOrder = CashierOrder.GetNewOrder();
         cashierOrder.setRegister(command.getRegister());
 
-        RestTemplate restTemplate = new RestTemplate();
+        headers.set( "apikey", API_KEY );
+        HttpEntity<CashierOrder> cashierOrderHttpEntity = new HttpEntity<>(cashierOrder, headers);
 
         String resourceUrl = "http://" + API_HOST + "/order/register/" + cashierOrder.getRegister();
 
         // get response as a CashierOrder instance
-        ResponseEntity<CashierOrder> response = restTemplate.postForEntity(resourceUrl, cashierOrder, CashierOrder.class);
+        ResponseEntity<CashierOrder> response = restTemplate.postForEntity(resourceUrl, cashierOrderHttpEntity, CashierOrder.class);
         CashierOrder createdCashierOrderBody = response.getBody();
 
         return  "Starbucks Reserved Order" + "\n\n" +
@@ -44,16 +50,15 @@ public class SpringCashierService {
                 "\n" +
                 "Register: " + createdCashierOrderBody.getRegister() + "\n" +
                 "Status:   " + createdCashierOrderBody.getStatus() + "\n";
-
     }
 
-    public String clearOrder(@Valid Command command){    //WIP
+    public String clearOrder(@Valid Command command){
         CashierOrder cashierOrder = CashierOrder.GetNewOrder();
         cashierOrder.setRegister(command.getRegister());
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String resourceUrl = "http://" + API_HOST + "/order/register/" + cashierOrder.getRegister();
+        String resourceUrl = "http://" + API_HOST + "/order/register/" + cashierOrder.getRegister() + "?apikey=" + API_KEY;
 
         // get response as a CashierOrder instance
         restTemplate.delete(resourceUrl);
@@ -68,7 +73,7 @@ public class SpringCashierService {
         //create new rest template?
         RestTemplate restTemplate = new RestTemplate();
         //grab url with corresponding register
-        String resourceUrl = "http://" + API_HOST + "/order/register/" + registerID;
+        String resourceUrl = "http://" + API_HOST + "/order/register/" + registerID + "?apikey=" + API_KEY;;
 
         try {
             // get response as a CashierOrder instance

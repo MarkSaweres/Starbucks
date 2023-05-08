@@ -7,10 +7,10 @@ services:
       - name: my-node-route
         paths:
           - /api
-#    plugins:
-#      - name: key-auth
+    plugins:
+      - name: key-auth
 
-#consumers:
-#  - username: QA
-#    keyauth_credentials:
-#      - key: testing123
+consumers:
+  - username: QA
+    keyauth_credentials:
+      - key: testing123
