@@ -1,10 +1,15 @@
 package com.example.springstarbucksclient;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.InetAddress;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import com.example.springstarbucksclient.model.CashierOrder;
 import com.example.springstarbucksclient.model.Command;
@@ -13,11 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,8 +31,20 @@ public class SpringCashierController {
     private SpringCashierService springCashierService;
 
     @GetMapping
-    public String getAction( @ModelAttribute("command") Command command,
-                             Model model, HttpSession session) {
+    public String getAction(@ModelAttribute("command") Command command,
+                            Model model,
+                            HttpServletResponse response,
+                            HttpServletRequest request,
+//                             @CookieValue("userName") String userNameCookieValue,
+                             HttpSession session) {
+        // first check whether the user is logged in
+        Optional<Cookie> userNameCookieOptional = Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals("userName"))
+                .findFirst();
+        if (userNameCookieOptional.isEmpty()) {
+//            response.addCookie(new Cookie("userName", "value"));
+            return "login";
+        }
 
         String message = "" ;
 

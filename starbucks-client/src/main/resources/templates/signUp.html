@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Starbucks Reserved</title>
+</head>
+
+<h1 align="center">Welcome to The Sign Up Page</h1>
+
+<!-- FORM SECTION -->
+
+<form name="form" th:object="${authCommand}" method="post" action="/auth/register">
+    <p align="center">
+        <input type="text" name="userName" id="userName"/><label>User name (minimum 5 character in length)</label><br/>
+        <input type="password" name="password" id="password"/><label>Password (minimum 5 character in length)</label>
+    </p>
+    <p align="center">
+      <input type="submit" name="action" value="Sign Up">
+      &nbsp;&nbsp;&nbsp;&nbsp;
+    </p>
+    <div align="center">
+          <textarea readonly id="message" name="message"
+                    cols="50" rows="1" th:text="${message}"/>
+    </div>
+    <br/>
+</form>
+
+</body>
+</html>
