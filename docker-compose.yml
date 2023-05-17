@@ -49,8 +49,8 @@ services:
 
   starbucks-api-1:
     image: spring-starbucks-api
-    ports:
-      - "8080:8080"
+#    ports:
+#      - "8080:8080"
     depends_on:
       - mysql
     environment:

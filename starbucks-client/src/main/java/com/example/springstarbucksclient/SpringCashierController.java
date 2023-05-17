@@ -41,10 +41,10 @@ public class SpringCashierController {
         Optional<Cookie> userNameCookieOptional = Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("userName"))
                 .findFirst();
-        if (userNameCookieOptional.isEmpty()) {
-//            response.addCookie(new Cookie("userName", "value"));
-            return "login";
-        }
+//        if (userNameCookieOptional.isEmpty()) {
+////            response.addCookie(new Cookie("userName", "value"));
+//            return "login";
+//        }
 
         String message = "" ;
 
