@@ -1,7 +1,6 @@
 # Overall Architechture
 
 
-
 # Cashiers App
 
 ![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/a4e3e592-664d-4acc-bbd2-fa7c7312f625)
@@ -43,7 +42,77 @@ I had to use kompose to convert my origional dockercompose.yaml into the require
 
 # Technical Requirements
 
+Cashier's App - Cashiers App Deployed and running on GKE PODS (2 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/1cc47b9e-7850-484e-8074-7e703c88f110)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/9c5dd735-17f5-4a82-a484-80ea6398aca0)
+
+
+Cashier's App - Rendering must use MVC by processing REST API calls from Starbucks API via Kong Gateway on GCP (5 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/a88f0133-9044-47be-a099-9a27f3a11112)
+
+
+Cashier's App - Order Created via REST API call to Kong Endpoint with API key running on GCP (5 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/dac785a3-9fe0-4b1b-a149-ddfe50dde1d5)
+
+
+Cashier's App - Order Payment Reflected on UI with Updated Balance Paid by Mobile App (5 points) (More Visible During Demo)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/ff7008b2-6ac5-49c0-a7c5-ef025583cba5)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/6b29fb8a-bfff-41fd-bf8b-fc2e47b7e782)
+
+GCP Cashier's App LB - External IP of Load Balancer used for Demo/Screnshots of Cashier's App (1 point)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/578b3039-e282-4175-bd2e-ea06c09ebb8a)\
+
+GCP Cashier's App LB - Evidence of Load Balancer with Heahtly Backends on GCP / GKE (2 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/14573d44-ce63-4f1d-a94d-52ba5621affe)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/78865f89-be9c-4f0a-af36-0c93c608a7d6)
+
+GCP Starbucks API Internal LB - Evidence of Healthy Running Starbucks API Pods in GKE (2 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/0cc2cc51-f1e8-43d4-bcc7-c914c57db55f)
+
+GCP Starbucks API Internal LB - Evidence of Reachability Tests via Ping API call with Kong API key to Service Endpoint (10 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/d5a2cf9f-6717-4ab3-b91f-ee673a3449f3)
+
+MySQL Cloud SQL - Evidence of Running MySQL Instance on Cloud SQL (5 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/02e09843-8a45-4d75-819d-4ac760609ac2)
+
+MySQL Cloud SQL - Evidence that MySQL IP is used by Cashier's App to Persist Order Data (Spring JPA Requirement) (5 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/52995602-0e77-4092-97a3-c84890be8728)
+
+MySQL Cloud SQL - Evidence that Data Stored in MySQL DB cooresponds to Data visible on Web UI (5 points)(more visible during Demo)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/ff7008b2-6ac5-49c0-a7c5-ef025583cba5)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/ba9ef6ae-f51b-4f8b-a321-a7a091c01cd4)
+
+Kong Connection - Moible App should be connected to Starbucks API via Kong using API key (demo'ed during startup of Mobile App) (15 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/43f307e7-afe8-4c8d-a341-6c3bb39a7f31)
+
+Kong Connection - Cashier's App and other Apps in Demo must connect to Starbucks API via Kong using API Key (5 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/7bebc6fd-bd74-443c-b329-7fd47466ec9b)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/e3b05368-b3cf-4f63-99e5-5c6cd0b02f64)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/afe202ea-244d-4ba2-9a05-fad4429210b7)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/250adc61-0cad-497d-b0d2-9d294821731c)
+
+Kong API Auth - Source code for Apps shows evidence that REST API requests are using API Key Auth (5 points)
+
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/e81dd33d-a72a-416f-b93e-ece2840aae11)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/400115bf-5d38-429a-ad85-b6c0c5cb9b1c)
+
+
 # Extra Credit Awards
+
 I believe I may be an honorable mention for the enterprise quality award for creating this on a windows machine.
+
 # Journal Entries
 
