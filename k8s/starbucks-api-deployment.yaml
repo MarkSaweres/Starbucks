@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: starbucks-api
+  name: starbucks-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: starbucks-api
+  template:
+    metadata:
+      annotations:
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.service: starbucks-api
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_HOST
+              value: 35.239.151.113
+            - name: MYSQL_PASS
+              value: cmpe172
+            - name: MYSQL_SCHEMA
+              value: starbucks
+            - name: MYSQL_USER
+              value: root
+            - name: SPRING_PROFILES_ACTIVE
+              value: test
+          image: gcr.io/starbucksproject-387022/spring-starbucks-api
+          imagePullPolicy: Always
+          name: starbucks-api
+      restartPolicy: Always

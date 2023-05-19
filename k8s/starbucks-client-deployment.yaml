@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: starbucks-client
+  name: starbucks-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: starbucks-client
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.service: starbucks-client
+    spec:
+      containers:
+        - env:
+            - name: API_HOST
+              value: 34.117.36.252
+            - name: API_KEY
+              value: testing123
+            - name: REGISTER
+              value: "5012349"
+          image: gcr.io/starbucksproject-387022/spring-starbucks-client
+          name: starbucks-client
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+      restartPolicy: Always
