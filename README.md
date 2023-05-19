@@ -1,5 +1,6 @@
 # Overall Architechture
 
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/4c9169f5-3b1f-41cb-a73b-bee42dbbaa02)
 
 # Cashiers App
 
@@ -115,4 +116,8 @@ Kong API Auth - Source code for Apps shows evidence that REST API requests are u
 I believe I may be an honorable mention for the enterprise quality award for creating this on a windows machine.
 
 # Journal Entries
+
+https://github.com/MarkSaweres/StarbucksProject for prior commits, split the repo up about a week ago
+
+
 
