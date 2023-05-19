@@ -1,298 +1,49 @@
-# Starbucks End-to-End Example
+# Overall Architechture
 
 
-## REST API 
 
-Run the provided Starbucks API.  See Demo in class on how to setup, build and run Starbucks API.  Then test using the provided Postman Project.
+# Cashiers App
 
-![postman-project](images/postman-project.png)
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/a4e3e592-664d-4acc-bbd2-fa7c7312f625)
 
 
-The Starbucks API Specification is as follows:
+In my project the cashiers app is refered to as the starbucks client. I ported the nodeJS version of the client and recreated it as a Spring MVC application. This application was initially wrapped up as a jar using maven and deployed to a docker container.
 
-```
-Ping Health Check.
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/49cac3d4-fb93-432b-bbba-b6c32332943b)
 
-GET 	/ping
-		
+Now, with GKE, the image is uploaded to my cloud project, and the client is able to be accessed through it's public IP address. The buttons on the client have been coded as REST API calls that go through KONG Authentication.
 
-		{
-		    "test": "Starbucks API version 3.1 alive!"
-		}		
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/39366cac-b697-4d36-96c6-70c5ab3245a7)
 
 
-Get a list of Starbucks Cards (along with balances).
+After the API call is authenticated, it will be sent to the starbucks API. New login and registration pages were created, however they were not implemented in the final demo recording.
+# Starbucks REST API
 
-GET 	/cards 
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/a8c1cd21-a975-4e74-bbab-e786c8f6a3db)
 
-		[
-		    {
-		        "cardNumber": "344329363",
-		        "cardCode": "257",
-		        "balance": 20.0,
-		        "activated": false,
-		        "status": "New Card"
-		    },
-		    {
-		        "cardNumber": "323586828",
-		        "cardCode": "607",
-		        "balance": 20.0,
-		        "activated": false,
-		        "status": "New Card"
-		    }
-		]		
 
+The Starbucks Rest API folder was heavily modififed for this project. New models, Repositiories, and Controllers were made for User login and registration, however I was unable to fully implement it before the final demo. The origional starbucks REST API was modified to work with my program. Origionally data was stored in a hashmap for the API, and that ahs been removed for the final version.
 
-Create a new Starbucks Card.
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/1dc9ee9c-0492-4ffb-8a8b-20fdb171ae93)
 
-POST 	/cards
+# Cloud Deployments
 
-		{
-		    "cardNumber": "299255600",
-		    "cardCode": "903",
-		    "balance": 20.0,
-		    "activated": false,
-		    "status": "New Card"
-		}
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/91f3d339-4850-48c2-a389-ed83e88d02f4)
 
+I was able to 'successfully' deploy my project on GKE. However, I am constantly running into issues regarding the heathchecks of my services. Although this was a persistent, irregullarly occuring problem, I was able to get the whole thing up and running on the cloud, as can be seen in my demo recording.
 
-Get the details of a specific Starbucks Card.
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/36538c69-faa4-4e2b-bfa7-68fb706deca2)
 
-GET 	/cards/{num}
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/2bbafc5e-cfb4-4f52-b864-8d2b2d1a939a)
 
-		
 
-		{
-		    "cardNumber": "299255600",
-		    "cardCode": "903",
-		    "balance": 20.0,
-		    "activated": false,
-		    "status": "New Card"
-		}
+I had to use kompose to convert my origional dockercompose.yaml into the required files needed to run my project on GKE. The kompose process was relatively clean, however I had to do some cleaning up and wiring to make sure everythign worked as intended.
 
+![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/478dd964-319d-42ba-93fe-8667e067673b)
 
-Activate Card 
+# Technical Requirements
 
-POST 	/card/activate/{num}/{code}
-
-		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 20,
-		  "Activated": true,
-		  "Status": ""
-		}
-
-
-Create a new order. Set order as "active" for register.
-
-POST    /order/register/{regid}
-        
-        Request:
-
-	{
-	    "drink": "Caffe Latte",
-	    "milk":  "Whole",
-	    "size":  "Grande"
-	}           
-
-	Response:
-
-	{
-	    "drink": "Caffe Latte",
-	    "milk": "Whole",
-	    "size": "Grande",
-	    "total": 3.91,
-	    "status": "Ready for Payment.",
-	    "register": "5012349"
-	}	    
-
-
-Request the current state of the "active" Order.
-
-GET     /order/register/{regid}
-        
-	{
-	    "drink": "Caffe Latte",
-	    "milk": "Whole",
-	    "size": "Grande",
-	    "total": 3.91,
-	    "status": "Ready for Payment.",
-	    "register": "5012349"
-	}
-
-
-Clear the "active" Order.
-
-DELETE  /order/register/{regid}
-       
-	{
-	    "Status": "Active Order Cleared!"
-	}
-
-
-Process payment for the "active" Order. 
-
-POST    /order/register/{regid}/pay/{cardnum}
-        
-        Response: (with updated card balance)
-
-	{
-	    "cardNumber": "299255600",
-	    "cardCode": "903",
-	    "balance": 16.09,
-	    "activated": true,
-	    "status": "New Card"
-	}
-
-
-Get a list of all active orders (for all registers)
-
-GET     /orders
-        
-	[
-	    {
-	        "drink": "Caffe Latte",
-	        "milk": "Whole",
-	        "size": "Grande",
-	        "total": 3.91,
-	        "status": "Ready for Payment.",
-	        "register": "5012349"
-	    },
-	    {
-	        "drink": "Caffe Latte",
-	        "milk": "Whole",
-	        "size": "Grande",
-	        "total": 3.91,
-	        "status": "Paid with Card: 299255600 Balance: $16.09.",
-	        "register": "5012349"
-	    }
-	]
-
-
-Delete all Cards (Use for Unit Testing Teardown)
-
-DELETE 	/cards
-
-	{
-	  "Status": "All Cards Cleared!"
-	}
-
-
-Delete all Orders (Use for Unit Testing Teardown)
-
-DELETE 	/orders	
-
-	{
-	  "Status": "All Orders Cleared!"
-	}
-
-```
-
-
-## Example Usage for Starbucks Mobile App Simulator
-
-
-![1-starbucks-screen-flows](images/starbucks-screen-flows.png)
-
-![2.starbucks-pin-screen](images/starbucks-pin-screen.png)
-
-![3.starbucks-making-payments](images/starbucks-making-payments.png)
-
-
-## Explore the Sample Node.js and Java Mobile App Simulator
-
-Run these Apps against the Starbucks API and explore how they work.
-
-## Example Workflow
-
-### Run Starbucks API 
-
-* Launch via Docker Image:  paulnguyen/spring-starbucks-api
-
-```
-	docker network create --driver bridge starbucks
-
-	docker run --network starbucks --name spring-starbucks-api -td -p 8080:8080 \
-	--platform=linux/amd64 paulnguyen/spring-starbucks-api	
-
-```
-
-### Starbucks App (Mobile App Simulator)
-
-* Requires Gradle 4.9 and Java JDK 8
-* Launch and Login with PIN: 1234 
-	* touch(1,5), touch(2,5), touch(3,5) and touch(1,6)
-	* or just use the "login" shortcut 
-
-* Starbucks App Pin Screen
-
-![starbucks-app](images/starbucks-app.png)
-
-* Main Screen After Login
-
-![starbucks-app-post-login](images/starbucks-app-post-login.png)
-
-
-### Placing an Order on the Starbucks Cash Register (Node.js App)
-
-* Run via Docker Image: paulnguyen/starbucks-nodejs
-
-```
-	docker run --network starbucks --name starbucks-nodejs -td -p 90:9090  \
-	-e "api_endpoint=http://spring-starbucks-api:8080" \
-	--platform=linux/amd64 paulnguyen/starbucks-nodejs
-```
-
-* Cashier App
-
-![nodejs-cashier-app](images/nodejs-cashier-app.png)
-
-* Cashier App (Order Placed)
-
-![nodejs-place-order](images/nodejs-place-order.png)
-
-
-### Paying on the Starbucks App
-
-* touch(3,3) to switch to "pay screen"
-
-![starbucks-pay-screen](images/starbucks-pay-screen.png)
-
-* touch(2,2) to pay
-
-![starbucks-make-payment](images/starbucks-make-payment.png)
-
-* touch(3,3) to see balance on Starbucks Card after payment
-
-![starbucks-app-paid-balance](images/starbucks-app-paid-balance.png)
-
-6. Check Starbucks Cash Register for Successful Payment (Node.js App)
-
-* Click on "Get Order" to Refresh UI
-
-![starbucks-register-paid-for-order](images/starbucks-register-paid-for-order.png)
-
-7. Sample REST API Calls from Postman (List Cards)
-
-![rest-api-cards](images/rest-api-cards.png)
-
-8. Sample REST API Calls from Postman (List Orders)
-
-![rest-api-orders](images/rest-api-orders.png)
-
-
-
-# Reference
-
-* http://kong.github.io/unirest-java
-* https://www.baeldung.com/unirest
-* http://stleary.github.io/JSON-java/index.html
-* https://www.programcreek.com/java-api-examples/?api=com.mashape.unirest.http.Unirest
-
-
-
-
-
-
+# Extra Credit Awards
+I believe I may be an honorable mention for the enterprise quality award for creating this on a windows machine.
+# Journal Entries
 
