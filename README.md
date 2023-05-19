@@ -119,5 +119,53 @@ I believe I may be an honorable mention for the enterprise quality award for cre
 
 https://github.com/MarkSaweres/StarbucksProject for prior commits, split the repo up about a week ago
 
+April 26 - May 5:
+
+Download the project, and couldn't get it to run. Tried to get the various java verisons correct for the project, but couldn't.
+
+May 5 - May 7:
+
+Got the application to run, through a lot of bugfixing. This is around the time my gitPod trial ran out, and moved the project over to IntelliJ. Project mostly working on docker. Ported Node JS version of project to Spring MVC. Still had issues running the mobile application
+
+May 7 - May 8:
+
+Got application to run with the rest of the program while on docker. Mobile Application needed work to use REST API calls.
+
+May 8 - May 9:
+
+Began working on Auth using REST API and session cookies. The session cookie will only hold username, and not any confidential data. program will check if the cookie has a username, if not, send to login/register page.
+
+May 9 - May 11:
+
+Auth Repository, Controller, adn service built, along with REST calls and HTML pages.
+
+May 11 - May 13:
+
+Began working on implementing KONG. First time trying to implement it in a project, it took some time to uderstand. However, I was able to make good progress.
+
+May 13 - May 14:
+
+Kong API working with docker. Whole system functions correctly over docker using KONG API Gateway. Began researching how to implement GKE.
+
+May 14 - May 15:
+
+Through my research, came to the conclusion that we need to use Kompose to convert my docker compose file into files used for Kubernetes. Because my whole program was created using docker-compose up, it posed as a problem for me to deploy it to GKE. However, this was a workable solution for me.
+
+May 15 - May 16:
+
+GKE mostly working , still needs a lot of work to completely connect everything together. Constant issues with HealthChecks.
+
+May 16 - May 17:
+
+GKE progress is getting better. Found workaround for healthcheck issues, however they are very temporary and revert to origional settings after 5-10 minutes. 
+
+May 17 - May 18:
+
+GKE fully working, just with some small healthChekc issues for KONG. All other services and ingresses haved worked great. Mobile App connected through KONG on GKE. Final day of Commits
+
+
+
+
+
 
 
