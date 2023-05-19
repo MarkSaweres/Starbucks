@@ -38,9 +38,9 @@ public class SpringCashierController {
 //                             @CookieValue("userName") String userNameCookieValue,
                              HttpSession session) {
         // first check whether the user is logged in
-        Optional<Cookie> userNameCookieOptional = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("userName"))
-                .findFirst();
+//        Optional<Cookie> userNameCookieOptional = Arrays.stream(request.getCookies())
+//                .filter(cookie -> cookie.getName().equals("userName"))
+//                .findFirst();
 //        if (userNameCookieOptional.isEmpty()) {
 ////            response.addCookie(new Cookie("userName", "value"));
 //            return "login";
@@ -53,16 +53,16 @@ public class SpringCashierController {
                 "Register: " + command.getRegister() + "\n" +
                 "Status:   " + "Ready for New Order"+ "\n" ;
 
-        String server_ip = "" ;
-        String host_name = "" ;
-        try {
-            InetAddress ip = InetAddress.getLocalHost() ;
-            server_ip = ip.getHostAddress() ;
-            host_name = ip.getHostName() ;
-        } catch (Exception e) { }
+//        String server_ip = "" ;
+//        String host_name = "" ;
+//        try {
+//            InetAddress ip = InetAddress.getLocalHost() ;
+//            server_ip = ip.getHostAddress() ;
+//            host_name = ip.getHostName() ;
+//        } catch (Exception e) { }
 
         model.addAttribute( "message", message ) ;
-        model.addAttribute( "server",  host_name + "/" + server_ip ) ;
+//        model.addAttribute( "server",  host_name + "/" + server_ip ) ;
 
         String selectedStore = (String) session.getAttribute("store");
         if (selectedStore != null) {
