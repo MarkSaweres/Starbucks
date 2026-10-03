@@ -1,4 +1,38 @@
-# Overall Architechture
+# Starbucks Cloud Ordering System
+
+A cashier's app, mobile app and REST API for a Starbucks-style ordering and payment system, run as containers behind an API gateway and deployed to Google Kubernetes Engine. Built for CMPE 172 (Enterprise Software) at San Jose State University, spring 2023.
+
+## Highlights
+- **Ported the cashier's app from Node.js to Spring MVC.** It renders with Thymeleaf and makes every action, from placing an order to checking the register, a REST call to the backend.
+- **API gateway with key auth.** All traffic from the cashier's app and the mobile app goes through Kong, which checks an API key before passing requests on.
+- **Load balanced backend.** HAProxy spreads requests across two Spring Boot API replicas, which store cards and orders in MySQL with Spring Data JPA.
+- **Containers to Kubernetes.** The whole stack runs locally with Docker Compose. I converted it with Kompose into the Kubernetes manifests in `k8s/` and deployed it to GKE, with Cloud SQL for MySQL and an external load balancer for the cashier's app.
+- **Login and registration.** I added user models, a repository, a service and a controller to the API, plus login and sign-up pages in the client. They work but weren't wired into the final demo.
+
+## Tech stack
+Java 11, Spring Boot, Spring MVC, Thymeleaf, Spring Data JPA, MySQL, Kong, HAProxy, Docker, Docker Compose, Kubernetes (GKE), Kompose, Google Cloud SQL, Postman
+
+## Repository layout
+| Folder | What it is |
+| --- | --- |
+| `starbucks-client` | Cashier's app (Spring MVC port of the Node.js version) |
+| `starbucks-api` | Starbucks REST API (Spring Boot, JPA, MySQL) |
+| `starbucks-app` | Mobile app simulator (Java, Gradle) that pays for orders through Kong |
+| `starbucks-nodejs` | The original Node.js cashier's app, kept for reference |
+| `k8s` | Kubernetes manifests for GKE |
+| `docker-compose.yml`, `kong.yaml`, `haproxy.cfg` | Local stack: MySQL, two API replicas, HAProxy, Kong and the client |
+| `postman` | API test collection |
+
+## Running it locally
+1. Build the images: `mvn package` in `starbucks-api` and `starbucks-client`, then `docker build -t spring-starbucks-api .` and `docker build -t spring-starbucks-client .` in each folder.
+2. Start the stack: `docker compose up -d`.
+3. Open the cashier's app at http://localhost:8081. API calls go through Kong on port 8000.
+
+The API key and database passwords in this repo are local demo values for the class, not real credentials. The GKE deployment was for the class demo, and the demo recordings are linked in `DemoVideoLinks`.
+
+---
+
+## Architecture
 
 ![image](https://github.com/MarkSaweres/Starbucks/assets/46986292/4c9169f5-3b1f-41cb-a73b-bee42dbbaa02)
 
